@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    dataBinding.enabled = true
+    defaultConfig {
+        applicationId "com.sudansh.coolshop"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    androidExtensions {
+        experimental = true
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
+    lintOptions {
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation deps.kotlin.stdlib
+    implementation deps.constraint_layout
+    implementation deps.material
+    implementation deps.appcompat
+    implementation deps.core
+    implementation deps.coroutines.core
+    testImplementation deps.coroutines.test
+    implementation deps.lifecycle.extensions
+
+    androidTestImplementation deps.mockk.android
+    testImplementation deps.mockk.core
+    //room
+    implementation deps.preferences
+
+    //camera
+    implementation deps.camera
+
+    //Retrofit
+    implementation deps.retrofit
+
+    //glide
+    implementation deps.glide.core
+    kapt deps.glide.compiler
+
+    //Koin
+    implementation deps.koin.core
+    testImplementation deps.koin.test
+    androidTestImplementation(deps.koin.test) {
+        exclude group: 'org.mockito'
+    }
+
+    //mockito
+    testImplementation deps.mockito.core
+    androidTestImplementation deps.mockito.android
+    testImplementation deps.mockwebserver
+
+    //espresso
+    androidTestImplementation deps.espresso.other
+    androidTestImplementation deps.espresso.core
+    testImplementation deps.lifecycle.test
+    androidTestImplementation deps.lifecycle.test
+    androidTestImplementation deps.test.junit
+}

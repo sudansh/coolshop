@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="picker">
+        <item>Use Camera</item>
+        <item>Pick from Gallery</item>
+    </array>
+</resources>
